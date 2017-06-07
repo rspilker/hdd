@@ -76,23 +76,23 @@ var deckDecoder = function() {
 		var entries = [];
 		var r = reader(encoded);
 		r.nextByte();
-		r.nextByte();
-		var type = r.nextByte();
-		var heroes = r.nextByte();
+		r.nextVarInt();
+		var type = r.nextVarInt();
+		var heroes = r.nextVarInt();
 		for (var i = 0; i < heroes; i++) {
 			hero = r.nextVarInt();
 		}
-		var singles = r.nextByte();
+		var singles = r.nextVarInt();
 		for (var i = 0; i < singles; i++) {
 			entries.push({ count: 1, dbfId: r.nextVarInt()});
 		}
-		var doubles = r.nextByte();
+		var doubles = r.nextVarInt();
 		for (var i = 0; i < doubles; i++) {
 			entries.push({ count: 2, dbfId: r.nextVarInt()});
 		}
-		var multiples = r.nextByte();
+		var multiples = r.nextVarInt();
 		for (var i = 0; i < multiples; i++) {
-			entries.push({ count: r.nextByte(), dbfId: r.nextVarInt()});
+			entries.push({ count: r.nextVarInt(), dbfId: r.nextVarInt()});
 		}
 		return { type: type, hero: hero, cards: entries};
 	};
