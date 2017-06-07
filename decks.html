@@ -8,16 +8,17 @@ var decoder = deckDecoder();
 
 var showDeck = function() {
 	var encoded = document.getElementById('deckString').value;
-	var deck = decoder.decode(encoded);
-	document.getElementById("type").innerText = deck.type + ' Deck';
-	document.getElementById("hero").innerText = deck.hero.name + ' (' + deck.heroClass + ')';
-	var list = document.getElementById("cards");
-	list.innerHTML = "";
-	for (var i = 0; i < deck.cards.length; i++) {
-		var row = document.createElement("li");
-		row.innerText = deck.cards[i].count + "x (" + deck.cards[i].card.cost + ") "+ deck.cards[i].card.name;
-		list.appendChild(row);
-	}
+	decoder.decode(encoded).then((deck) => {
+		document.getElementById("type").innerText = deck.type + ' Deck';
+		document.getElementById("hero").innerText = deck.hero.name + ' (' + deck.heroClass + ')';
+		var list = document.getElementById("cards");
+		list.innerHTML = "";
+		for (var i = 0; i < deck.cards.length; i++) {
+			var row = document.createElement("li");
+			row.innerText = deck.cards[i].count + "x (" + deck.cards[i].card.cost + ") "+ deck.cards[i].card.name;
+			list.appendChild(row);
+		}
+	});
 };
 		</script>
 	</head>

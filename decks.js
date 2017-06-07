@@ -31,17 +31,15 @@ var deckDecoder = function() {
 	};
 
 
-	var lookup = {};
-
-	fetch('https://api.hearthstonejson.com/v1/latest/enUS/cards.collectible.json')
-	.then(function(response) {
-	  return response.json();
-	})
-	.then(function(data){
-		for (var i = 0; i < data.length; i++) {
-			lookup[data[i]['dbfId']] = data[i];
-		}
-	});
+	var lookup = fetch('https://api.hearthstonejson.com/v1/latest/enUS/cards.collectible.json')
+			.then((response) => response.json())
+			.then(function(data){
+				var result = {};
+				for (var i = 0; i < data.length; i++) {
+					result[data[i]['dbfId']] = data[i];
+				}
+				return result;
+			});
 
 	var cardClasses = {
 		'WARRIOR': 'Warrior',
@@ -97,10 +95,5 @@ var deckDecoder = function() {
 		return { type: type, hero: hero, cards: entries};
 	};
 	
-	// TODO: Make this a Promise so we can wait for the lookup to be completed.
-	var decode = function(encoded) {
-		return resolve(deck(encoded), lookup);
-	};
-	
-	return {decode: decode};
+	return {decode: (encoded) => lookup.then((mapping) => resolve(deck(encoded), mapping))};
 };
