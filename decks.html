@@ -14,15 +14,30 @@ var showDeck = function() {
 		var list = document.getElementById("cards");
 		list.innerHTML = "";
 		for (var i = 0; i < deck.cards.length; i++) {
+			var card = deck.cards[i].card;
 			var row = document.createElement("li");
-			row.innerText = deck.cards[i].count + "x (" + deck.cards[i].card.cost + ") "+ deck.cards[i].card.name;
+			var image = document.createElement("img");
+			image.setAttribute("src", "http://media.services.zam.com/v1/media/byName/hs/cards/enus/animated/" + card.id+ "_premium.gif");
+			row.appendChild(image);
+			row.appendChild(document.createTextNode(deck.cards[i].count + "x (" +card.cost + ") "+ card.name));
 			list.appendChild(row);
 		}
 	});
 };
 		</script>
+		<style>
+			li>img {
+				position: absolute;
+				left: 200px;
+				display: none;
+			}
+			li:hover>img {
+				display: block;
+			}
+		</style>
 	</head>
 	<body>
+		<div>Example: AAEBAf0EBMkD7QW4CJKsAg37AbsClQOrBLQE5gSWBbkGvAjjEboWgbICmMQCAA==</div>
 		<input id="deckString" type="text" size="50"/><button onclick="showDeck()" type="submit">Show</button>
 		<br /><br />
 		<div id="type"></div>
